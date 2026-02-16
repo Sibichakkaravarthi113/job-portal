@@ -26,6 +26,34 @@
 </div>
 
 </div>
+ 
+<script>
+// Load posted jobs from localStorage and append
+function loadPostedJobs(){
+	const container = document.getElementById('jobs');
+	const posts = JSON.parse(localStorage.getItem('postedJobs') || '[]');
+	posts.forEach(p=>{
+		const d = document.createElement('div');
+		d.className = 'job-card'; d.setAttribute('data-location', p.location);
+		d.innerHTML = `<h3>${p.title}</h3><p>${p.company}</p><p>Location: ${p.location}</p><p>${p.type}</p><p>${p.desc || ''}</p>`;
+		container.appendChild(d);
+	});
+}
+window.addEventListener('load', loadPostedJobs);
+
+// Keep existing functions in script.js if present
+if(typeof filterJobs === 'undefined'){
+	// fallback simple filter in case script.js not loaded
+	window.filterJobs = function(){
+		let filter = document.getElementById('locationFilter').value;
+		let jobs = document.querySelectorAll('.job-card');
+		jobs.forEach(job => {
+			if(filter === 'all' || job.dataset.location === filter){ job.style.display='block'; }
+			else job.style.display='none';
+		});
+	}
+}
+</script>
 
 <script src="script.js"></script>
 </body>
