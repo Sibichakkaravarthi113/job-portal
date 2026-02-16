@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Post Job — JobPortal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <h2>JobPortal</h2>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="post-job.html">Post Job</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </nav>
+
+  <main style="padding:28px;">
+    <h2>Post a Job</h2>
+    <form id="postForm">
+      <input id="title" placeholder="Job title" required />
+      <input id="company" placeholder="Company" required />
+      <select id="location">
+        <option>Chennai</option>
+        <option>Bangalore</option>
+        <option>Remote</option>
+      </select>
+      <select id="type">
+        <option>Full-Time</option>
+        <option>Part-Time</option>
+        <option>Internship</option>
+      </select>
+      <textarea id="desc" placeholder="Short description"></textarea>
+      <button type="submit">Post Job</button>
+    </form>
+    <p id="msg" style="color:green"></p>
+  </main>
+
+  <script>
+    function submitPost(data){
+      const posts = JSON.parse(localStorage.getItem('postedJobs') || '[]');
+      posts.push(Object.assign({id: Date.now()}, data));
+      localStorage.setItem('postedJobs', JSON.stringify(posts));
+    }
+
+    document.getElementById('postForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const title = document.getElementById('title').value.trim();
+      const company = document.getElementById('company').value.trim();
+      const location = document.getElementById('location').value;
+      const type = document.getElementById('type').value;
+      const desc = document.getElementById('desc').value.trim();
+      if(!title || !company){
+        document.getElementById('msg').textContent = 'Please fill required fields';
+        return;
+      }
+      submitPost({title, company, location, type, desc});
+      document.getElementById('msg').textContent = 'Job posted. Redirecting to Jobs...';
+      setTimeout(()=> location.href = 'jobs.html', 900);
+    });
+
+    // Auto-submit when URL has query params (useful for automated test)
+    function qs(key){ const params = new URLSearchParams(window.location.search); return params.get(key); }
+    const qTitle = qs('title');
+    if(qTitle){
+      // populate fields from query and submit
+      document.getElementById('title').value = qTitle || '';
+      document.getElementById('company').value = qs('company') || '';
+      const loc = qs('location'); if(loc) document.getElementById('location').value = loc;
+      const t = qs('type'); if(t) document.getElementById('type').value = t;
+      document.getElementById('desc').value = qs('desc') || '';
+      // slight delay to allow UI render
+      setTimeout(()=> document.getElementById('postForm').dispatchEvent(new Event('submit', {cancelable:true, bubbles:true})), 300);
+    }
+  </script>
+</body>
+</html>
