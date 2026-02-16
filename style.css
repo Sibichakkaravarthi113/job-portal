@@ -1,0 +1,52 @@
+body {
+font-family: Arial;
+margin:0;
+background:#f4f6f8;
+}
+
+nav {
+background:#2c3e50;
+color:white;
+display:flex;
+justify-content:space-between;
+padding:15px;
+}
+
+nav ul {
+display:flex;
+list-style:none;
+}
+
+nav ul li a {
+color:white;
+margin:10px;
+text-decoration:none;
+}
+
+.hero {
+text-align:center;
+padding:100px;
+background:#3498db;
+color:white;
+}
+
+.btn {
+background:white;
+padding:10px 20px;
+text-decoration:none;
+color:#3498db;
+}
+
+.job-card {
+background:white;
+margin:15px;
+padding:15px;
+border-radius:8px;
+box-shadow:0 0 5px gray;
+}
+
+input {
+padding:10px;
+margin:5px;
+width:250px;
+}

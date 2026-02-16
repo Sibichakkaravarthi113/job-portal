@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Available Jobs</h2>
+
+<select id="locationFilter" onchange="filterJobs()">
+<option value="all">All Locations</option>
+<option value="Chennai">Chennai</option>
+<option value="Bangalore">Bangalore</option>
+</select>
+
+<div id="jobs">
+
+<div class="job-card" data-location="Chennai">
+<h3>Web Developer</h3>
+<p>Location: Chennai</p>
+</div>
+
+<div class="job-card" data-location="Bangalore">
+<h3>Data Analyst</h3>
+<p>Location: Bangalore</p>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
